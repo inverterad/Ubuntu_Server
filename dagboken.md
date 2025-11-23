@@ -12,7 +12,7 @@ En reboot med skärmen igång verkar räcka, för nu fungerar skärmen. Så vi f
 Nu ska vi testa installera Steam Link och se om det fungerar eller inte. <br>
 Jag börjar med att installera flatpak med: <br> 
 <code>sudo apt install flatpak</code>. <br>
-<code>sudo flatpak remote-add flathub https://flathub.org/repo/flathub.flatpakrepo</code>
+<code>sudo flatpak remote-add flathub https://flathub.org/repo/flathub.flatpakrepo</code><br>
 <code>sudo flatpak install flathub com.valvesoftware.SteamLink</code>
 
 Allt verkade fungera fint. Jag slog igång Steam Link på servern och kopplade ihop en xbox-kontroll samt kopplade ihop den med min stationära PC och allt var fint fram till jag startade ett spel, skärmen var bara svart. Kunde inte navigera Steam Big Picture Mode heller. Så nu blir det lite felsökning. <br>
@@ -30,7 +30,8 @@ Första rekommendationen är att uppdatera drivrutiner, så vi går tillbaka dit
 NVIDIA-SMI has failed because it couldn't communicate with the NVIDIA driver. Make sure that the latest NVIDIA driver is installed and running. <br>
 Suck. <br>
 
-Det visade sig dock att driver 535 inte var problemet. Så jag har återställt det som det var och det som löste problemet var att "disable hardware encoding" på min stationära PC. Efter det så verkade allt flyta på fint. Provade spela ett ett par spel och det kändes smidigt. Måste installera Dark Souls eller något där det är noga med precision och testa. <br>
+Det visade sig dock att driver 535 inte var problemet. Så jag har återställt det som det var och det som löste problemet var att "disable hardware encoding" på min stationära PC. <br>
+Efter det så verkade allt flyta på fint. Provade spela ett ett par spel och det kändes smidigt. Måste installera Dark Souls eller något där det är noga med precision och testa. <br>
 
 Valde att ställa in så att jag inte behöver skriva in login och lösen varje gång jag startar om servern. Men SSH behåller kravet på lösenord. Jag skapade en fil med lite kod i! <br>
 <code>sudo nano /etc/lightdm/lightdm.conf.d/50-autologin.conf</code> <br>
