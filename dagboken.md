@@ -33,6 +33,8 @@ Suck. <br>
 Det visade sig dock att driver 535 inte var problemet. Så jag har återställt det som det var och det som löste problemet var att "disable hardware encoding" på min stationära PC. <br>
 Efter det så verkade allt flyta på fint. Provade spela ett ett par spel och det kändes smidigt. Måste installera Dark Souls eller något där det är noga med precision och testa. <br>
 
+## Lite mer inställningar
+
 Valde att ställa in så att jag inte behöver skriva in login och lösen varje gång jag startar om servern. Men SSH behåller kravet på lösenord. Jag skapade en fil med lite kod i! <br>
 <code>sudo nano /etc/lightdm/lightdm.conf.d/50-autologin.conf</code> <br>
 Fyllde i följande: <br>
@@ -41,6 +43,26 @@ autologin-user=YOUR_USERNAME <br>
 autologin-user-timeout=0 </code><br>
 
 Och nu funkar det galant!
+
+## XRDP
+Nu vill jag få igång Remote Desktop från min windows-maskin, man vet aldrig när det kan behövas. <br>
+<code>sudo apt install xrdp</code><br>
+<code>sudo adduser xrdp ssl-cert</code> - Om jag förstått det här rätt så kan det uppstå en del problem då man försöker nå TLS certificate files som krävs för att få åtkomst, likt SSH.<br>
+<code>nano .xsession</code> - Skapar den här filen i mitt home directory, skriver in "startxfce4" och fortsätter med <br>
+<code>chmod +x .xsession</code> - Det här ska tydligen assistera XRDP med att veta vilken desktop environment den ska köra på.<br>
+<code>sudo systemctl restart xrdp</code><br>
+
+Försökte connecta via Windows inbyggda Remote Desktop-program men den avslutade min session direkt.<br>
+Jag fick ändra några grejer, bl.a. fick jag lägga till <br>
+<code>unset DBUS_SESSION_BUS_ADDRESS <br>
+unset XDG_RUNTIME_DIR <br>
+startxfce4</code> <br>
+Efter jag hade commented out följande <br>
+<code>#test -x /etc/X11/Xsession && exec /etc/X11/Xsession <br>
+#exec /bin/sh /etc/X11/Xsession </code><br>
+i filen: <code>/etc/xrdp/startwm.sh</code><br>
+Detta behövde jag göra så att en pågående XFCE-session inte skulle krocka med den man skapar i och med remote desktop. Och nu fungerar det! Åtminstone någorlunda.
+
 
 
 # 2025-11-22
