@@ -1,3 +1,10 @@
+# 2025-11-29
+Idag ska jag starta upp den klassiska brandväggen ufw. Antagligen bara göra lite enklare inställningar, i dagsläget vill jag t.ex. bara att man ska komma åt SSH med lokal anslutning. Nu är det så att jag är bakom en CG-NAT så ingen skulle nog försöka utifrån i vilket fall som helst men jag vill ställa in det ändå. <br>
+
+<code>sudo ufw allow from 192.168.1.0/24 to any port 22</code> <br>
+
+Det får räcka för stunden då jag tror att ufw ska neka alla ingående utom de jag nu sagt ja till. Vi märker väl om det börjar bli problem framöver så får man justera brandväggen.<br>
+
 # 2025-11-23
 Installerar neofetch för att lättare kunna se min hårdvara. <br>
 Jag räknar med att drivrutinerna för grafikkortet inte är optimala med tanke på installationen och att jag var tvungen att köra "nomodeset", så nu försöker jag uppdatera drivrutiner med: <br>
