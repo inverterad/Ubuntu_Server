@@ -12,7 +12,7 @@ sudo chmod a+r /etc/apt/keyrings/docker.asc<br>
 sudo tee /etc/apt/sources.list.d/docker.sources <<EOF <br>
 Types: deb<br>
 URIs: https://download.docker.com/linux/ubuntu<br>
-Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")<br>
+Suites: \$(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")<br>
 Components: stable<br>
 Signed-By: /etc/apt/keyrings/docker.asc<br>
 EOF<br>
