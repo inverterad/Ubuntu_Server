@@ -1,9 +1,81 @@
+# 2025-12-01
+## Docker
+Nu följer jag den här instruktionen för att installera Docker: https://docs.docker.com/engine/install/ubuntu/ <br>
+Vi får se hur bra det går. <br><br>
+<code>
+sudo apt update<br>
+sudo apt install ca-certificates curl<br>
+sudo install -m 0755 -d /etc/apt/keyrings<br>
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc<br>
+sudo chmod a+r /etc/apt/keyrings/docker.asc<br>
+<br>
+sudo tee /etc/apt/sources.list.d/docker.sources <<EOF <br>
+Types: deb<br>
+URIs: https://download.docker.com/linux/ubuntu<br>
+Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")<br>
+Components: stable<br>
+Signed-By: /etc/apt/keyrings/docker.asc<br>
+EOF<br>
+<br>
+sudo apt update<br>
+</code>
+
+Det verkar ha fungerat helt ok. Då ska vi se om vi kan använda det till något.<br>
+Vidare kommer jag följa https://docker-curriculum.com/ så långt det känns rimligt.<br><br>
+Det verkar som att jag ska lägga till min användare i en viss grupp så att jag slipper skriva sudo före allting. Så jag fixade så att min användare också tillhör gruppen docker, och nu verkar allt vara frid och fröjd på den fronten.<br><br>
+Ett viktigt kommando: <br>
+<code>docker container prune</code><br><br>
+Allt verkar fungera, så nu ett faktiskt test.. <br>
+## Jellyfin via Docker
+Då följer jag instruktionerna på: https://jellyfin.org/docs/general/installation/container/?method=docker-cli <br><br>
+<code>docker pull jellyfin/jellyfin</code><br>
+<code>docker volume create jellyfin-config</code><br>
+<code>docker volume create jellyfin-cache</code><br><br>
+<code>docker run -d \\<br>
+--name jellyfin \\<br>
+-p 8096:8096/tcp \\<br>
+-p 7359:7359/udp \\<br>
+--volume jellyfin-config:/config \\<br>
+--volume jellyfin-cache:/cache \\<br>
+--mount type=bind,source=/srv/share,target=/media \\<br>
+--restart=unless-stopped \\<br>
+jellyfin/jellyfin<br>
+</code><br>
+Det fungerar, jag kan koppla upp mig mot min jellyfin från min stationära (den här) datorn. Men den kan inte spela upp video åt mig, direkt jag försöker så fryser bilden och ingenting händer. Det verkar potentiellt ha med hardware acceleration att göra, men jag är osäker. Får titta närmare så snart jag kan.<br>
+
+
 # 2025-11-29
+## UFW
 Idag ska jag starta upp den klassiska brandväggen ufw. Antagligen bara göra lite enklare inställningar, i dagsläget vill jag t.ex. bara att man ska komma åt SSH med lokal anslutning. Nu är det så att jag är bakom en CG-NAT så ingen skulle nog försöka utifrån i vilket fall som helst men jag vill ställa in det ändå. <br>
 
 <code>sudo ufw allow from 192.168.1.0/24 to any port 22</code> <br>
 
 Det får räcka för stunden då jag tror att ufw ska neka alla ingående utom de jag nu sagt ja till. Vi märker väl om det börjar bli problem framöver så får man justera brandväggen.<br>
+
+## Samba
+Jag behöver ha ett smidigt sätt att flytta filer mellan min stationära och min server, så nu ska jag installera Samba och försöka förstå hur det fungerar.<br>
+<code>sudo apt install samba -y</code><br>
+<code>sudo mkdir -p /srv/share</code><br>
+
+<code>sudo smbpasswd -a USERNAME</code><br>
+<code>sudo smbpasswd -e USERNAME</code><br>
+
+<code>sudo nano /etc/samba/smb.conf</code><br>
+
+För in följande längst ner: <br>
+<code>[Shared]<br>
+        path = /srv/share<br>
+        browseable = yes<br>
+        read only = no<br>
+        valid users = USERNAME<br>
+        force user = USERNAME<br>
+</code>
+
+<code>sudo systemctl restart smbd</code><br>
+
+<code>sudo ufw allow 'Samba'</code><br>
+
+Och sen hoppar jag in i katalogen via file explorer i windows genom att gå till \\IPADRESS\Shared och får skriva in lite användarnamn och lösenord, klart och betalt verkar det som!
 
 # 2025-11-23
 Installerar neofetch för att lättare kunna se min hårdvara. <br>
