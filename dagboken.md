@@ -9,7 +9,7 @@ sudo install -m 0755 -d /etc/apt/keyrings<br>
 sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc<br>
 sudo chmod a+r /etc/apt/keyrings/docker.asc<br>
 <br>
-sudo tee /etc/apt/sources.list.d/docker.sources <<EOF <br>
+sudo tee /etc/apt/sources.list.d/docker.sources << EOF <br>
 Types: deb<br>
 URIs: https://download.docker.com/linux/ubuntu<br>
 Suites: \$(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")<br>
@@ -26,6 +26,7 @@ Det verkar som att jag ska lägga till min användare i en viss grupp så att ja
 Ett viktigt kommando: <br>
 <code>docker container prune</code><br><br>
 Allt verkar fungera, så nu ett faktiskt test.. <br>
+
 ## Jellyfin via Docker
 Då följer jag instruktionerna på: https://jellyfin.org/docs/general/installation/container/?method=docker-cli <br><br>
 <code>docker pull jellyfin/jellyfin</code><br>
@@ -43,6 +44,7 @@ jellyfin/jellyfin<br>
 </code><br>
 Det fungerar, jag kan koppla upp mig mot min jellyfin från min stationära (den här) datorn. Men den kan inte spela upp video åt mig, direkt jag försöker så fryser bilden och ingenting händer. Det verkar potentiellt ha med hardware acceleration att göra, men jag är osäker. Får titta närmare så snart jag kan.<br>
 
+https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html Blir guiden jag följer för att installera möjligheten att använda mig av mitt grafikkort när jag ska spela upp från jellyfin.
 
 # 2025-11-29
 ## UFW
