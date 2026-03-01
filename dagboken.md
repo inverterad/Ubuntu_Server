@@ -18,6 +18,11 @@ Det är inte exakt som jag minns det, men ungefär korrekt. Spännande var det i
 
 Efter det har jag justerat docker-container och samba-inställningarna, jag har lagt till en ny katalog för musik och av någon anledning så kan jag streama Mad God utan problem nu. Så det är kul!
 
+Uppdaterat docker-kommando
+
+
+        docker run -d --name jellyfin -p 8096:8096/tcp -p 7359:7359/udp --volume jellyfin-config:/config --volume jellyfin-cache:/cache --mount type=bind,source=/srv/share,target=/media --mount type=bind,source=/srv/musik,target=/media2 --restart=unless-stopped jellyfin/jellyfin
+
 Fortsättning följer.
 
 # 2025-12-01
@@ -60,7 +65,7 @@ Först tar vi hem jellyfin, sedan skapar vi volymer vi kommer behöva
 
 Sedan kör vi igång alltihop
 
-        docker run -d --name jellyfin -p 8096:8096/tcp -p 7359:7359/udp 1 --volume jellyfin-config:/config --volume jellyfin-cache:/cache --mount type=bind,source=/srv/share,target=/media --restart=unless-stopped jellyfin/jellyfin
+        docker run -d --name jellyfin -p 8096:8096/tcp -p 7359:7359/udp --volume jellyfin-config:/config --volume jellyfin-cache:/cache --mount type=bind,source=/srv/share,target=/media --restart=unless-stopped jellyfin/jellyfin
 
 
 Det fungerar, jag kan koppla upp mig mot min jellyfin från min stationära (den här) datorn. Men den kan inte spela upp video åt mig, direkt jag försöker så fryser bilden och ingenting händer. Det verkar potentiellt ha med hardware acceleration att göra, men jag är osäker. Får titta närmare så snart jag kan.
