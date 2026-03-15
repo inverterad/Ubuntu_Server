@@ -1,3 +1,7 @@
+# 2025-03-15
+
+En liten paus på den här servern då den fysiska burken har fått bli en ESXi-burk för tillfället. Det går att läsa mer om det [här](https://github.com/inverterad/Homelab/tree/main/ESXI).
+
 # 2025-03-01
 
 Jag har lagt upp lite media och bara testat via telefonen så att allt fungerar korrekt. Jag laddade upp några skivor jag äger på Bandcamp, och det fungerar ju hur bra som helst såhär lokalt, nästa steg borde bli att göra det här tillgängligt ute på stan?
